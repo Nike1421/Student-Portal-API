@@ -10,10 +10,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+
 @Document(collection = "Student")
 public class Student {
+	
 	@Id
-	private long SAPID;
+	private long id;
 	private String studentName;
 	private String contactNumber;
+	
 }

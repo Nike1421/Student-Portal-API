@@ -23,6 +23,7 @@ public class StudentController {
 	@PostMapping("/addStudent")
 	public String saveStudent(@RequestBody Student student) {
 		studentRepository.save(student);
+		System.out.println(student.getId());
 		return "Student Saved with id:";
 	}
 
