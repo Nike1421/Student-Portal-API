@@ -38,6 +38,9 @@ public class User {
 
 	@DBRef
 	private Set<Role> roles = new HashSet<>();
+	
+	@DBRef
+	private Member userMember;
 
 	public User(String sapId, String email, String password) {
 		this.sapId = sapId;

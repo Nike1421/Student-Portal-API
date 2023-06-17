@@ -13,9 +13,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Document(collection = "")
+@Document(collection = "Role")
 public class Role {
-	private String roleId;
+	private String id;
 
 	private ERole roleName;
 }

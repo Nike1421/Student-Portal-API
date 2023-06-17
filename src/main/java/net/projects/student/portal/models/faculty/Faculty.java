@@ -15,6 +15,15 @@ import net.projects.student.portal.models.Member;
 public class Faculty extends Member {
 	@Id
 	private String sapID;
+	
+	private String facultyName;
+	private String facultyEmail;
+	private String facultyContactNumber;
+	private String facultyJoiningYear;
+	
+	private String resumeLink;
+	private String linkedinLink;
+	private String portfolioLink;
 	private List<Publications> publicationList;
 	private List<Subject> subjectList;
 }
