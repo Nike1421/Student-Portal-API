@@ -8,5 +8,5 @@ import net.projects.student.portal.models.ERole;
 import net.projects.student.portal.models.Role;
 
 public interface RoleRepository extends MongoRepository<Role, String>{
-	Optional<Role> findByName(ERole name);
+	Optional<Role> findByRoleName(ERole roleName);
 }
