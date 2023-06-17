@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class StudentController {
 	private StudentRepository studentRepository;
 
 	@PostMapping("/addStudent")
+	@PreAuthorize("hasRole('SUPERADMIN') or hasRole('MODERATOR')")
 	public String saveStudent(@RequestBody Student student) {
 		studentRepository.save(student);
 		System.out.println(student.getSapID());
@@ -32,16 +34,19 @@ public class StudentController {
 	}
 
 	@GetMapping("/getAllStudents")
+	@PreAuthorize("hasRole('SUPERADMIN') or hasRole('MODERATOR') or hasRole('FACULTY')")
 	public List<?> getStudents() {
 		return studentRepository.findAll();
 	}
 
 	@GetMapping("/getStudent/{id}")
+	@PreAuthorize("hasRole('SUPERADMIN') or hasRole('MODERATOR') or hasRole('FACULTY')")
 	public Optional<?> getStudent(@PathVariable String id) {
 		return studentRepository.findById(id);
 	}
 
 	@DeleteMapping("/deleteStudent/{id}")
+	@PreAuthorize("hasRole('SUPERADMIN') or hasRole('MODERATOR')")
 	public String deleteStudent(@PathVariable String id) {
 		studentRepository.deleteById(id);
 		return "Deleted";
