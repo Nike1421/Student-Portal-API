@@ -1,4 +1,4 @@
-package net.projects.student.portal.models;
+package net.projects.student.portal.models.student;
 
 import lombok.Getter;
 import lombok.Setter;
