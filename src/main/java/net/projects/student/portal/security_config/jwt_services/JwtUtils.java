@@ -22,14 +22,13 @@ import net.projects.student.portal.security_config.services.UserDetailsImpl;
 public class JwtUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-	// Change
-	@Value("${bezkoder.app.jwtSecret}")
+	@Value("${net.projects.student.portal.jwtSecret}")
 	private String jwtSecret;
 
-	@Value("${bezkoder.app.jwtExpirationMs}")
+	@Value("${net.projects.student.portal.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
-	@Value("${bezkoder.app.jwtCookieName}")
+	@Value("${net.projects.student.portal.jwtCookieName}")
 	private String jwtCookie;
 
 	public String getJwtFromCookies(HttpServletRequest request) {
