@@ -9,9 +9,9 @@ import net.projects.student.portal.models.User;
 public interface UserRepository extends MongoRepository<User, String>{
 	
 	// MAYBE CHANGE TO FINDBYSAPID
-	Optional<User> findByUsername(String username);
+	Optional<User> findBySapId(String sapId);
 
-	Boolean existsByUsername(String username);
+	Boolean existsBySapId(String sapId);
 
 	Boolean existsByEmail(String email);
 }
