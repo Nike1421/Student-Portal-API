@@ -6,4 +6,6 @@ import net.projects.student.portal.models.faculty.Faculty;
 
 public interface FacultyRepository extends MongoRepository<Faculty, String>{
 	Faculty findBySapID(String sapID);
+	
+	Boolean existsBySapID(String sapID);
 }
