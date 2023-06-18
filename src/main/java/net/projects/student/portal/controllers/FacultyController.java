@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,8 @@ import net.projects.student.portal.repository.FacultyRepository;
 @RestController
 @RequestMapping("/api/faculty")
 public class FacultyController {
-	
+	// TODO: UPDATE FACULTY CONTROLLER
+	 
 	@Autowired
 	FacultyRepository facultyRepository;
 	
@@ -39,10 +41,18 @@ public class FacultyController {
 	public List<?> getFaculties() {
 		return facultyRepository.findAll();
 	}
+	
+	@PutMapping("/updateFaculty")
+	@PreAuthorize("hasRole('SUPERADMIN')")
+	public ResponseEntity<?> updateFaculty(@RequestBody Faculty faculty) {
+		facultyRepository.save(faculty);
+		return ResponseEntity.ok(new MessageResponse("Faculty Updated!"));
+	}
 
 	@GetMapping("/getFaculty/{id}")
 	@PreAuthorize("hasRole('SUPERADMIN') or hasRole('MODERATOR')")
 	public Optional<?> getFaculty(@PathVariable String id) {
+		
 		return facultyRepository.findById(id);
 	}
 

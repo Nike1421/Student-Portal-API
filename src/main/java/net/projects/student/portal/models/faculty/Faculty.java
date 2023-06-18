@@ -7,10 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import net.projects.student.portal.models.Member;
 
 @Getter
 @Setter
+@ToString
+
 @Document(collection = "Faculty")
 public class Faculty extends Member {
 	@Id
