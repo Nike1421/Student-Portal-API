@@ -58,7 +58,7 @@ public class SecurityConfig {
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeHttpRequests().requestMatchers("/auth/**").permitAll().requestMatchers("/api/test/**")
-				.permitAll().requestMatchers("/student/**").permitAll().anyRequest().authenticated();
+				.permitAll().requestMatchers("/student/**").permitAll().requestMatchers("/user/**").permitAll().anyRequest().authenticated();
 
 		http.authenticationProvider(authenticationProvider());
 

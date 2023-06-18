@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,18 +27,17 @@ public class UserController {
 	@Autowired
 	JwtUtils jwtUtils;
 
+	@GetMapping("/view")
 	public ResponseEntity<?> getSelfDetails(HttpServletRequest request) {
 		String jwtString = jwtUtils.getJwtFromCookies(request);
 
 		try {
-
 			User user = null;
 			if (jwtString != null && jwtUtils.validateJwtToken(jwtString)) {
 				String usernameString = jwtUtils.getUserNameFromJwtToken(jwtString);
 
 				user = userRepository.findBySapId(usernameString).orElseThrow(
 						() -> new UsernameNotFoundException("User Not Found with SAP ID " + usernameString));
-
 			}
 			return ResponseEntity.ok().body(user);
 		} catch (Exception e) {
