@@ -47,13 +47,13 @@ public class AuthController {
 
 	@Autowired
 	RoleRepository roleRepository;
-	
+
 	@Autowired
 	StudentRepository studentRepository;
-	
+
 	@Autowired
 	FacultyRepository facultyRepository;
-	
+
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
@@ -89,45 +89,20 @@ public class AuthController {
 		}
 
 		User user = new User(signUpRequest.getSapId(), signUpRequest.getEmail(),
-				passwordEncoder.encode(signUpRequest.getPassword()));
+				passwordEncoder.encode(signUpRequest.getPassword()), signUpRequest.isSuperAdmin());
 
-		Set<String> strRoles = signUpRequest.getRoles();
 		Set<Role> roles = new HashSet<>();
 
-		if (strRoles == null) {
-//			Role studentRole = roleRepository.findByName(ERole.ROLE_STUDENT)
-//					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//			roles.add(studentRole);
-			return ResponseEntity.badRequest().body(new MessageResponse("No User Role Specified"));
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "admin":
-					Role adminRole = roleRepository.findByRoleName(ERole.ROLE_SUPERADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(adminRole);
-
-					break;
-				case "faculty":
-					Role facultyRole = roleRepository.findByRoleName(ERole.ROLE_FACULTY)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(facultyRole);
-
-					break;
-				case "moderator":
-					Role modRole = roleRepository.findByRoleName(ERole.ROLE_MODERATOR)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(modRole);
-
-					break;
-				case "student":
-					Role studentRole = roleRepository.findByRoleName(ERole.ROLE_STUDENT)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(studentRole);
-				}
-			});
+		if (facultyRepository.existsBySapID(signUpRequest.getSapId())) {
+			Role facultyRole = roleRepository.findByRoleName(ERole.ROLE_FACULTY)
+					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+			roles.add(facultyRole);
+		} else if (studentRepository.existsBySapID(signUpRequest.getSapId())) {
+			Role studentRole = roleRepository.findByRoleName(ERole.ROLE_STUDENT)
+					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+			roles.add(studentRole);
 		}
-		
+
 		if (signUpRequest.isSuperAdmin()) {
 			Role adminRole = roleRepository.findByRoleName(ERole.ROLE_SUPERADMIN)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -135,8 +110,10 @@ public class AuthController {
 		}
 
 		user.setRoles(roles);
+
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
+
 }
