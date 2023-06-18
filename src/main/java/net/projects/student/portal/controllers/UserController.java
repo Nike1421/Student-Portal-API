@@ -15,7 +15,7 @@ import net.projects.student.portal.security_config.jwt_services.JwtUtils;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 // CHECK THIS PLEASE MUST HAVE ERRORS
 	@Autowired

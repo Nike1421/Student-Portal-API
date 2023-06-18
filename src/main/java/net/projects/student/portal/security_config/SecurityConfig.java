@@ -57,8 +57,13 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.authorizeHttpRequests().requestMatchers("/auth/**").permitAll().requestMatchers("/api/test/**")
-				.permitAll().requestMatchers("/student/**").permitAll().requestMatchers("/user/**").permitAll().anyRequest().authenticated();
+				.authorizeHttpRequests()
+				.requestMatchers("/api/auth/**").permitAll()
+				.requestMatchers("/api/test/**").permitAll()
+				.requestMatchers("/api/student/**").permitAll()
+				.requestMatchers("/api/faculty/**").permitAll()
+				.requestMatchers("/api/user/**").permitAll()
+				.anyRequest().authenticated();
 
 		http.authenticationProvider(authenticationProvider());
 

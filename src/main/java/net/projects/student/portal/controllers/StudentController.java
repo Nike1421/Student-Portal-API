@@ -19,7 +19,7 @@ import net.projects.student.portal.repository.StudentRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/api/student")
 public class StudentController {
 
 	@Autowired

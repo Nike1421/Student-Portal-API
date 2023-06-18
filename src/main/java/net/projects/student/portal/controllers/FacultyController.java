@@ -21,7 +21,7 @@ import net.projects.student.portal.repository.FacultyRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/faculty")
+@RequestMapping("/api/faculty")
 public class FacultyController {
 	
 	@Autowired
