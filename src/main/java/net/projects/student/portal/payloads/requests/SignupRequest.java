@@ -21,6 +21,8 @@ public class SignupRequest {
 	  @NotBlank
 	  @Size(min = 6, max = 40)
 	  private String password;
+	  
+	  private boolean isSuperAdmin;
 
 	  public String getSapId() {
 	    return sapId;
@@ -53,4 +55,8 @@ public class SignupRequest {
 	  public void setRole(Set<String> roles) {
 	    this.roles = roles;
 	  }
+
+	public boolean isSuperAdmin() {
+		return isSuperAdmin;
+	}
 	}

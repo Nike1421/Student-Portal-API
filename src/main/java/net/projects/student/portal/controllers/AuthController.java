@@ -128,12 +128,10 @@ public class AuthController {
 			});
 		}
 		
-		if (strRoles.contains("student")) {
-			user.setUserMember(studentRepository.findBySapID(signUpRequest.getSapId()));
-		}
-		
-		if (strRoles.contains("faculty")) {
-			user.setUserMember(facultyRepository.findBySapID(signUpRequest.getSapId()));
+		if (signUpRequest.isSuperAdmin()) {
+			Role adminRole = roleRepository.findByRoleName(ERole.ROLE_SUPERADMIN)
+					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+			roles.add(adminRole);
 		}
 
 		user.setRoles(roles);

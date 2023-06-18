@@ -35,6 +35,9 @@ public class User {
 	@NotBlank
 	@Size(min = 8, max = 50)
 	private String password;
+	
+	@NotBlank
+	private boolean isSuperAdmin;
 
 	@DBRef
 	private Set<Role> roles = new HashSet<>();
@@ -42,10 +45,11 @@ public class User {
 	@DBRef
 	private Member userMember;
 
-	public User(String sapId, String email, String password) {
+	public User(String sapId, String email, String password, boolean isSuperAdmin) {
 		this.sapId = sapId;
 		this.email = email;
 		this.password = password;
+		this.isSuperAdmin = isSuperAdmin;
 	}
 
 }
