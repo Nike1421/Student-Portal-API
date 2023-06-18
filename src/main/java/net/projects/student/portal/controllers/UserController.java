@@ -17,12 +17,9 @@ import net.projects.student.portal.security_config.jwt_services.JwtUtils;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-// CHECK THIS PLEASE MUST HAVE ERRORS
+
 	@Autowired
 	UserRepository userRepository;
-
-//	@Autowired
-//	private UserDetailsServiceImpl userDetailsService;
 
 	@Autowired
 	JwtUtils jwtUtils;
