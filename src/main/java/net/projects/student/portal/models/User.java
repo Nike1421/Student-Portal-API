@@ -14,34 +14,46 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
+
 @NoArgsConstructor
 @ToString
 @Document(collection = "User")
 public class User {
 
 	@Id
+	@Getter
+	@Setter
 	private String id;
 
+	@Getter
+	@Setter
 	@NotBlank
 	@Size(min = 10, max = 10)
 	private String sapId;
 
+	@Getter
+	@Setter
 	@NotBlank
 	@Size(max = 50)
 	private String email;
 
+	@Getter
+	@Setter
 	@NotBlank
 	@Size(min = 8, max = 50)
 	private String password;
 	
+	@Getter
+	@Setter
 	@NotBlank
 	private boolean isSuperAdmin;
 
+	
 	@DBRef
 	private Set<Role> roles = new HashSet<>();
 	
+	@Getter
+	@Setter
 	@DBRef
 	private Member userMember;
 
@@ -50,6 +62,14 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.isSuperAdmin = isSuperAdmin;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 }

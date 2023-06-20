@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import net.projects.student.portal.models.User;
 
+
 public interface UserRepository extends MongoRepository<User, String>{
 	
 	// MAYBE CHANGE TO FINDBYSAPID
@@ -14,4 +15,6 @@ public interface UserRepository extends MongoRepository<User, String>{
 	Boolean existsBySapId(String sapId);
 
 	Boolean existsByEmail(String email);
+	
+	
 }
