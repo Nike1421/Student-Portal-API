@@ -1,4 +1,4 @@
-package net.projects.student.portal.payloads.response;
+package net.projects.student.portal.payloads;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import net.projects.student.portal.models.User;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UserAllDataResponse {
+public class UserAllDataPayload {
 	private User user;
 	private Member member;
 }

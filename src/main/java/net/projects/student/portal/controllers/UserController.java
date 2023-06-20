@@ -1,6 +1,11 @@
 package net.projects.student.portal.controllers;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,11 +15,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import jakarta.servlet.http.HttpServletRequest;
 import net.projects.student.portal.models.ERole;
 import net.projects.student.portal.models.Member;
 import net.projects.student.portal.models.User;
-import net.projects.student.portal.payloads.response.UserAllDataResponse;
+import net.projects.student.portal.models.faculty.Faculty;
+import net.projects.student.portal.models.faculty.Publications;
+import net.projects.student.portal.models.student.Student;
+import net.projects.student.portal.payloads.UserAllDataPayload;
 import net.projects.student.portal.repository.FacultyRepository;
 import net.projects.student.portal.repository.StudentRepository;
 import net.projects.student.portal.repository.UserRepository;
@@ -57,7 +70,7 @@ public class UserController {
 					member = studentRepository.findBySapID(usernameString);
 				}
 			}
-			return ResponseEntity.ok().body(new UserAllDataResponse(user, member));
+			return ResponseEntity.ok().body(new UserAllDataPayload(user, member));
 		} catch (Exception e) {
 			// TODO: handle exception
 			return ResponseEntity.badRequest().build();

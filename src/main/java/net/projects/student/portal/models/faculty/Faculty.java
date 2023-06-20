@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,6 +14,7 @@ import net.projects.student.portal.models.Member;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 
 @Document(collection = "Faculty")
 public class Faculty extends Member {
