@@ -97,10 +97,13 @@ public class AuthController {
 			Role facultyRole = roleRepository.findByRoleName(ERole.ROLE_FACULTY)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			roles.add(facultyRole);
+			
+			user.setUserMember(facultyRepository.findBySapID(signUpRequest.getSapID()));
 		} else if (studentRepository.existsBySapID(signUpRequest.getSapID())) {
 			Role studentRole = roleRepository.findByRoleName(ERole.ROLE_STUDENT)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			roles.add(studentRole);
+			user.setUserMember(studentRepository.findBySapID(signUpRequest.getSapID()));
 		}
 
 		if (signUpRequest.isSuperAdmin()) {
@@ -110,6 +113,7 @@ public class AuthController {
 		}
 
 		user.setRoles(roles);
+		
 
 		userRepository.save(user);
 
