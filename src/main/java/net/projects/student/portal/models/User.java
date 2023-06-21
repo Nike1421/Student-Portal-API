@@ -33,6 +33,7 @@ public class User<T> {
 	@NotBlank
 	@Size(max = 50)
 	private String email;
+	
 	@NotBlank
 	@JsonIgnore
 	@Size(min = 8, max = 50)
@@ -41,7 +42,6 @@ public class User<T> {
 	@NotBlank
 	private boolean isSuperAdmin;
 
-	
 	@DBRef
 	private Set<Role> roles = new HashSet<>();
 	
