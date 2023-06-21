@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -40,6 +42,7 @@ public class User {
 	@Getter
 	@Setter
 	@NotBlank
+	@JsonIgnore
 	@Size(min = 8, max = 50)
 	private String password;
 	
