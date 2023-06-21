@@ -59,7 +59,7 @@ public class UserController {
 			if (jwtString != null && jwtUtils.validateJwtToken(jwtString)) {
 				String usernameString = jwtUtils.getUserNameFromJwtToken(jwtString);
 
-				user = userRepository.findBySapId(usernameString).orElseThrow(
+				user = userRepository.findBySapID(usernameString).orElseThrow(
 						() -> new UsernameNotFoundException("User Not Found with SAP ID " + usernameString));
 
 				if (user.getRoles().stream().filter(x -> x.getRoleName().equals(ERole.ROLE_FACULTY)) != null) {
@@ -85,7 +85,7 @@ public class UserController {
 			if (jwtString != null && jwtUtils.validateJwtToken(jwtString)) {
 				String usernameString = jwtUtils.getUserNameFromJwtToken(jwtString);
 
-				user = userRepository.findBySapId(usernameString).orElseThrow(
+				user = userRepository.findBySapID(usernameString).orElseThrow(
 						() -> new UsernameNotFoundException("User Not Found with SAP ID " + usernameString));
 
 				if (user.getRoles().stream().filter(x -> x.getRoleName().equals(ERole.ROLE_FACULTY)) != null) {

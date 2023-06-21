@@ -63,7 +63,7 @@ public class AuthController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getSapId(), loginRequest.getPassword()));
+				new UsernamePasswordAuthenticationToken(loginRequest.getSapID(), loginRequest.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -80,7 +80,7 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-		if (userRepository.existsBySapId(signUpRequest.getSapId())) {
+		if (userRepository.existsBySapID(signUpRequest.getSapID())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: User already registered!"));
 		}
 
@@ -88,16 +88,16 @@ public class AuthController {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
 		}
 
-		User user = new User(signUpRequest.getSapId(), signUpRequest.getEmail(),
+		User user = new User(signUpRequest.getSapID(), signUpRequest.getEmail(),
 				passwordEncoder.encode(signUpRequest.getPassword()), signUpRequest.isSuperAdmin());
 
 		Set<Role> roles = new HashSet<>();
 
-		if (facultyRepository.existsBySapID(signUpRequest.getSapId())) {
+		if (facultyRepository.existsBySapID(signUpRequest.getSapID())) {
 			Role facultyRole = roleRepository.findByRoleName(ERole.ROLE_FACULTY)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			roles.add(facultyRole);
-		} else if (studentRepository.existsBySapID(signUpRequest.getSapId())) {
+		} else if (studentRepository.existsBySapID(signUpRequest.getSapID())) {
 			Role studentRole = roleRepository.findByRoleName(ERole.ROLE_STUDENT)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			roles.add(studentRole);

@@ -24,7 +24,7 @@ public class UserDetailsImpl implements UserDetails {
 
 	private String id;
 
-	private String sapId;
+	private String sapID;
 
 	private String email;
 
@@ -48,7 +48,7 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return sapId;
+		return sapID;
 	}
 
 	@Override
@@ -75,10 +75,10 @@ public class UserDetailsImpl implements UserDetails {
 		return true;
 	}
 
-	public UserDetailsImpl(String id, String username, String email, String password,
+	public UserDetailsImpl(String id, String sapID, String email, String password,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
-		this.sapId = username;
+		this.sapID = sapID;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
@@ -88,7 +88,7 @@ public class UserDetailsImpl implements UserDetails {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).collect(Collectors.toList());
 
-		return new UserDetailsImpl(user.getId(), user.getSapId(), user.getEmail(), user.getPassword(), authorities);
+		return new UserDetailsImpl(user.getId(), user.getSapID(), user.getEmail(), user.getPassword(), authorities);
 	}
 
 	@Override

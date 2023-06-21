@@ -54,7 +54,7 @@ public class FacultyController {
 	@PreAuthorize("hasRole('SUPERADMIN')")
 	public ResponseEntity<?> setFacultyAsModerator(@RequestBody String sapId) {
 
-		User user = userRepository.findBySapId(sapId)
+		User user = userRepository.findBySapID(sapId)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with SAP ID " + sapId));
 
 		Set<Role> roles = user.getRoles();

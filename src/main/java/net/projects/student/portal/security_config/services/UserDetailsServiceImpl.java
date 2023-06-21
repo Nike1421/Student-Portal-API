@@ -19,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String sapId) throws UsernameNotFoundException {
-		User user = userRepository.findBySapId(sapId)
+		User user = userRepository.findBySapID(sapId)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with SAP ID " + sapId));
 
 		return UserDetailsImpl.build(user);

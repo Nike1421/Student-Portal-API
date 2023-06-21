@@ -31,7 +31,7 @@ public class User {
 	@Setter
 	@NotBlank
 	@Size(min = 10, max = 10)
-	private String sapId;
+	private String sapID;
 
 	@Getter
 	@Setter
@@ -60,8 +60,8 @@ public class User {
 	@DBRef
 	private Member userMember;
 
-	public User(String sapId, String email, String password, boolean isSuperAdmin) {
-		this.sapId = sapId;
+	public User(String sapID, String email, String password, boolean isSuperAdmin) {
+		this.sapID = sapID;
 		this.email = email;
 		this.password = password;
 		this.isSuperAdmin = isSuperAdmin;
