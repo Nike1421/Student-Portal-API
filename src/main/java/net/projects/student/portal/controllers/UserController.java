@@ -78,9 +78,8 @@ public class UserController {
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<?> updateSelfDetails(HttpServletRequest request, @RequestBody Member member) {
+	public ResponseEntity<?> updateSelfDetails(HttpServletRequest request, @RequestBody ObjectNode userAllDataPayload) {
 		String jwtString = jwtUtils.getJwtFromCookies(request);
-
 		try {
 			User user = null;
 			if (jwtString != null && jwtUtils.validateJwtToken(jwtString)) {
@@ -88,11 +87,47 @@ public class UserController {
 
 				user = userRepository.findBySapId(usernameString).orElseThrow(
 						() -> new UsernameNotFoundException("User Not Found with SAP ID " + usernameString));
+
+				if (user.getRoles().stream().filter(x -> x.getRoleName().equals(ERole.ROLE_FACULTY)) != null) {
+					System.out.println("HHIH");
+					Faculty faculty = convertJsonToFaculty(userAllDataPayload.get("member"));
+					facultyRepository.save(faculty);
+					System.out.println("DSDSDS");
+				} else if (user.getRoles().stream().filter(x -> x.getRoleName().equals(ERole.ROLE_STUDENT)) != null) {
+					Student student = convertJsonToStudent(userAllDataPayload.get("member"));
+					studentRepository.save(student);
+				}
 			}
 			return ResponseEntity.ok().body(user);
 		} catch (Exception e) {
 			// TODO: handle exception
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body(e);
 		}
+	}
+
+//	FIX THIS TOMORROW
+
+	public Faculty convertJsonToFaculty(JsonNode facultyJsonNode) {
+//		List<Publications> facultyPublicationList = new ArrayList<>();
+//		// Add null check
+//		ArrayNode arrayNode = (ArrayNode) facultyJsonNode.get("publicationList");
+//		if (arrayNode.isArray()) {
+//			for (JsonNode jsonNode : arrayNode) {
+//				System.out.println(jsonNode);
+//			}
+//		}
+		Faculty retrievedFaculty = new Faculty(facultyJsonNode.get("sapID").asText(),
+				facultyJsonNode.get("facultyName").asText(), facultyJsonNode.get("facultyEmail").asText(),
+				facultyJsonNode.get("facultyContactNumber").asText(),
+				facultyJsonNode.get("facultyJoiningYear").asText(), facultyJsonNode.get("resumeLink").asText(),
+				facultyJsonNode.get("linkedinLink").asText(), facultyJsonNode.get("portfolioLink").asText(), null,
+				null);
+
+		return retrievedFaculty;
+
+	}
+
+	public Student convertJsonToStudent(JsonNode studentJsonNode) {
+		return null;
 	}
 }
