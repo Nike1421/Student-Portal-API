@@ -11,16 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
-import net.projects.student.portal.models.ERole;
-import net.projects.student.portal.models.Member;
-import net.projects.student.portal.models.Role;
 import net.projects.student.portal.models.User;
 import net.projects.student.portal.models.faculty.Faculty;
 import net.projects.student.portal.models.student.Student;
-import net.projects.student.portal.payloads.UserAllDataPayload;
 import net.projects.student.portal.repository.FacultyRepository;
 import net.projects.student.portal.repository.RoleRepository;
 import net.projects.student.portal.repository.StudentRepository;
@@ -66,27 +62,23 @@ public class UserController {
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<?> updateSelfDetails(HttpServletRequest request, @RequestBody ObjectNode userAllDataPayload) {
+	public ResponseEntity<?> updateSelfDetails(HttpServletRequest request, @RequestBody JsonNode jsonNode) {
 		String jwtString = jwtUtils.getJwtFromCookies(request);
+		final ObjectMapper mapper = new ObjectMapper();
 		try {
-			User user = null;
 			if (jwtString != null && jwtUtils.validateJwtToken(jwtString)) {
 				String usernameString = jwtUtils.getUserNameFromJwtToken(jwtString);
 
-				user = userRepository.findBySapID(usernameString).orElseThrow(
-						() -> new UsernameNotFoundException("User Not Found with SAP ID " + usernameString));
-
-				if (user.getRoles().stream().filter(x -> x.getRoleName().equals(ERole.ROLE_FACULTY)) != null) {
-					System.out.println("HHIH");
-					Faculty faculty = convertJsonToFaculty(userAllDataPayload.get("member"));
-					facultyRepository.save(faculty);
-					System.out.println("DSDSDS");
-				} else if (user.getRoles().stream().filter(x -> x.getRoleName().equals(ERole.ROLE_STUDENT)) != null) {
-					Student student = convertJsonToStudent(userAllDataPayload.get("member"));
-					studentRepository.save(student);
+				if (facultyRepository.existsBySapID(usernameString)) {
+					Faculty retrievedFaculty = mapper.convertValue(jsonNode.get("userMember"), Faculty.class);
+					facultyRepository.save(retrievedFaculty);
+				} else if (studentRepository.existsBySapID(usernameString)) {
+					Student retrievedStudent = mapper.convertValue(jsonNode.get("userMember"), Student.class);
+					studentRepository.save(retrievedStudent);
 				}
+				userRepository.save(mapper.convertValue(jsonNode, User.class));
 			}
-			return ResponseEntity.ok().body(user);
+			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			// TODO: handle exception
 			return ResponseEntity.badRequest().body(e);
