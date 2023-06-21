@@ -57,7 +57,8 @@ public class StudentController {
 	@PreAuthorize("hasRole('SUPERADMIN')")
 	public ResponseEntity<?> setStudentAsModerator(@RequestBody String sapId) {
 
-		User user = userRepository.findBySapID(sapId)
+		@SuppressWarnings("unchecked")
+		User<Student> user = userRepository.findBySapID(sapId)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with SAP ID " + sapId));
 
 		Set<Role> roles = user.getRoles();
@@ -68,7 +69,9 @@ public class StudentController {
 
 		user.setRoles(roles);
 
-		userRepository.save(user);
+//		userRepository.save(user);
+		
+		System.out.println("DONE");
 		return ResponseEntity.ok(new MessageResponse("Faculty is now Moderator."));
 	}
 

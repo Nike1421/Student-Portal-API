@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import net.projects.student.portal.models.User;
 
 
+@SuppressWarnings("rawtypes")
 public interface UserRepository extends MongoRepository<User, String>{
 	
 	// MAYBE CHANGE TO FINDBYSAPID

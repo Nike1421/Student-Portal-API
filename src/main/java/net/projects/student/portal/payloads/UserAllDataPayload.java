@@ -10,6 +10,6 @@ import net.projects.student.portal.models.User;
 @Setter
 @AllArgsConstructor
 public class UserAllDataPayload {
-	private User user;
+	private User<?> user;
 	private Member member;
 }
