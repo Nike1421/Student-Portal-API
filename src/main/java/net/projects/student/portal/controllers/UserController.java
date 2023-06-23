@@ -84,30 +84,4 @@ public class UserController {
 			return ResponseEntity.badRequest().body(e);
 		}
 	}
-
-//	FIX THIS TOMORROW
-
-	public Faculty convertJsonToFaculty(JsonNode facultyJsonNode) {
-//		List<Publications> facultyPublicationList = new ArrayList<>();
-//		// Add null check
-//		ArrayNode arrayNode = (ArrayNode) facultyJsonNode.get("publicationList");
-//		if (arrayNode.isArray()) {
-//			for (JsonNode jsonNode : arrayNode) {
-//				System.out.println(jsonNode);
-//			}
-//		}
-		Faculty retrievedFaculty = new Faculty(facultyJsonNode.get("sapID").asText(),
-				facultyJsonNode.get("facultyName").asText(), facultyJsonNode.get("facultyEmail").asText(),
-				facultyJsonNode.get("facultyContactNumber").asText(),
-				facultyJsonNode.get("facultyJoiningYear").asText(), facultyJsonNode.get("resumeLink").asText(),
-				facultyJsonNode.get("linkedinLink").asText(), facultyJsonNode.get("portfolioLink").asText(), null,
-				null);
-
-		return retrievedFaculty;
-
-	}
-
-	public Student convertJsonToStudent(JsonNode studentJsonNode) {
-		return null;
-	}
 }
